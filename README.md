@@ -4,7 +4,7 @@
 
 A scout from Lords is caught near a village storehouse and locked in the cell under the watchtower. There are no weapons and no combat: only observation, patience and the things around you. Read the clues, solve three puzzles, slip past one patrolling guard and leave by the service gate. First playthrough about 10–15 minutes, a replay 5–8.
 
-**Status:** version 0.1.0, first playable MVP. Website: https://escape.temnorid.com · Download: not published yet (no repository or release exists, so the page shows "Coming soon" instead of a made-up link).
+**Status:** version 0.1.0, first playable MVP. Website: https://escape.temnorid.com · Download: [Temnorid-Escape-Setup.exe](https://github.com/WebArtWork/escape.temnorid.com/releases/latest/download/Temnorid-Escape-Setup.exe).
 
 ## How it plays
 
@@ -95,4 +95,4 @@ Packages (all local, see `Packages/manifest.json`): `3d-unity-core`, `3d-unity-i
 
 ## Release
 
-Windows installer or zip attached to a GitHub Release, and the "Download" button on `docs/index.html` pointing at that asset. TODO: create the repository and the release; until then the button is disabled.
+Windows installer or zip attached to a GitHub Release, and the "Download" button on `docs/index.html` pointing at that asset. The first release (v0.1.0) is published and the button points at its installer.
