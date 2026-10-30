@@ -1,0 +1,22 @@
+{
+  "allowUnsafeCode": false,
+  "noEngineReferences": false,
+  "versionDefines": [],
+  "defineConstraints": [],
+  "name": "Temnorid.Escape.EditorTools",
+  "rootNamespace": "Temnorid.Escape.EditorTools",
+  "references": [
+    "Temnorid.Escape",
+    "ITKamianets.Engine.Feedback",
+    "ITKamianets.Engine.Graybox",
+    "ITKamianets.Engine.Graybox.Editor",
+    "ITKamianets.Engine.FixedCamera"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false
+}

@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Temnorid: Escape</title>
+	<meta name="description" content="Temnorid: Escape is a short offline adventure: a captured scout escapes a watchtower prison through clues, three puzzles and one patrolling guard, seen through fixed cinematic cameras. No weapons, no combat.">
+	<link rel="canonical" href="https://escape.temnorid.com/">
+	<meta property="og:type" content="website">
+	<meta property="og:title" content="Temnorid: Escape">
+	<meta property="og:description" content="Escape from the watchtower prison.">
+	<meta property="og:url" content="https://escape.temnorid.com/">
+	<meta name="theme-color" content="#101218">
+	<style>
+		:root { --accent: #e3b64f; --bg: #101218; --panel: #1b1e27; --line: #2c303c; --text: #eceae4; --muted: #a9acb8; }
+		* { box-sizing: border-box; }
+		html { scroll-behavior: smooth; }
+		body { margin: 0; background: var(--bg); color: var(--text); font: 17px/1.65 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+		a { color: var(--accent); }
+		.wrap { max-width: 880px; margin: 0 auto; padding: 0 20px; }
+		header.site { border-bottom: 1px solid var(--line); }
+		header.site .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 14px; padding-bottom: 14px; }
+		.brand { font-weight: 700; color: var(--text); text-decoration: none; letter-spacing: .02em; }
+		nav a { margin-left: 18px; color: var(--muted); text-decoration: none; font-size: 15px; }
+		nav a:hover { color: var(--text); }
+		.hero { padding: 72px 0 56px; border-bottom: 1px solid var(--line); background: radial-gradient(900px 300px at 50% -10%, color-mix(in srgb, var(--accent) 20%, transparent), transparent); }
+		.eyebrow { color: var(--accent); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; font-size: 13px; margin: 0 0 10px; }
+		h1 { font-size: clamp(36px, 7vw, 60px); line-height: 1.08; margin: 0 0 12px; }
+		.tagline { font-size: 22px; margin: 0 0 18px; }
+		.lead { color: var(--muted); max-width: 640px; margin: 0 0 28px; }
+		.btn { display: inline-block; background: var(--accent); color: #101218; font-weight: 700; padding: 13px 24px; border-radius: 10px; text-decoration: none; }
+		.btn[aria-disabled="true"] { background: var(--line); color: var(--muted); cursor: not-allowed; }
+		.fine { color: var(--muted); font-size: 14px; margin: 14px 0 0; }
+		section { padding: 48px 0; border-bottom: 1px solid var(--line); }
+		h2 { font-size: 28px; margin: 0 0 16px; }
+		h3 { font-size: 18px; margin: 24px 0 8px; }
+		p { margin: 0 0 14px; }
+		ol, ul { padding-left: 22px; margin: 0 0 14px; }
+		li { margin-bottom: 8px; }
+		table { width: 100%; border-collapse: collapse; background: var(--panel); border-radius: 10px; overflow: hidden; }
+		th, td { text-align: left; padding: 10px 14px; border-bottom: 1px solid var(--line); vertical-align: top; }
+		th { color: var(--muted); font-weight: 600; font-size: 14px; }
+		tr:last-child td { border-bottom: 0; }
+		td:first-child { white-space: nowrap; font-weight: 600; }
+		.cards { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); }
+		.card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 18px; }
+		.card h3 { margin-top: 0; }
+		.shot { background: var(--panel); border: 1px dashed var(--line); border-radius: 12px; padding: 38px 18px; text-align: center; color: var(--muted); }
+		.note { background: var(--panel); border-left: 3px solid var(--accent); padding: 14px 16px; border-radius: 6px; color: var(--muted); }
+		footer { padding: 32px 0 56px; color: var(--muted); font-size: 14px; }
+		:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+		@media (max-width: 560px) { nav a:not(:last-child) { display: none; } }
+	</style>
+</head>
+<body>
+	<header class="site">
+		<div class="wrap">
+			<a class="brand" href="./">Temnorid: Escape</a>
+			<nav aria-label="Main menu">
+				<a href="#about">About</a>
+				<a href="#features">Features</a>
+				<a href="#controls">Controls</a>
+				<a href="#download">Download</a>
+			</nav>
+		</div>
+	</header>
+
+	<main>
+		<div class="hero">
+			<div class="wrap">
+				<p class="eyebrow">A Temnorid game · Windows · first MVP</p>
+				<h1>Temnorid: Escape</h1>
+				<p class="tagline">Escape from the watchtower prison.</p>
+				<p class="lead">A scout is caught near a village storehouse and locked in a cell. No weapons and no combat: read the clues, solve three puzzles, slip past one patrolling guard and leave by the service gate. About 10–15 minutes, played through classic fixed cameras. The text of the game is in Ukrainian.</p>
+				<a class="btn" href="#download" aria-disabled="true">Coming soon</a>
+				<p class="fine">Free · Windows 10 or newer · the installer has not been published yet.</p>
+			</div>
+		</div>
+
+		<section id="about">
+			<div class="wrap">
+				<h2>About</h2>
+				<p>Your mission failed. The patrol took your gear, and at dawn you will face the village elder. The guards are ordinary people doing their duty, and the prison is plain stone, wood and iron. You win by noticing the clue, working out the mechanism and choosing your moment.</p>
+				<p class="note">The graphics are made of simple shapes for now: the game was built to be played first and polished later. There is no magic and there are no creatures in this episode.</p>
+			</div>
+		</section>
+
+		<section id="features">
+			<div class="wrap">
+				<h2>Features</h2>
+				<ul>
+					<li>Fixed cinematic cameras for every room, with smooth cuts at the doorways.</li>
+					<li>Three fair puzzles in one unbroken chain: a cell latch, a records cabinet with symbols, a gate with a two-part key and two levers.</li>
+					<li>One predictable guard with a visible loop, a pause at the window, and one hiding place. Being caught only sends you back a few steps; nothing is lost.</li>
+					<li>Inventory with a key-combining step, a journal with the clues you found, and hints that arrive after you have been stuck for a while.</li>
+					<li>Autosave, Continue, and a replay from scratch.</li>
+					<li>Fully offline: no account, no network, nothing leaves your PC.</li>
+				</ul>
+				<h3>The episode</h3>
+				<div class="cards">
+					<div class="card"><h3>A. The cell</h3><p>Scratches on the wall, a clay cup, a bent wire and a damaged latch.</p></div>
+					<div class="card"><h3>B. The corridor</h3><p>Torches, a guard on the round, a row of barrels in an alcove.</p></div>
+					<div class="card"><h3>C. The storeroom</h3><p>A ledger, a cabinet of symbols and your confiscated pouch.</p></div>
+					<div class="card"><h3>D. The service gate</h3><p>A workbench, a plaque and two levers beside a locked iron gate.</p></div>
+					<div class="card"><h3>E. The courtyard</h3><p>Night air and the way out.</p></div>
+				</div>
+				<h3>Screenshots</h3>
+				<div class="shot">Screenshots will appear with the first release.</div>
+			</div>
+		</section>
+
+		<section id="controls">
+			<div class="wrap">
+				<h2>Controls</h2>
+				<table>
+					<thead><tr><th>Action</th><th>Keys</th></tr></thead>
+					<tbody>
+						<tr><td>Move</td><td>WASD or arrow keys</td></tr>
+						<tr><td>Move faster</td><td>Left Shift</td></tr>
+						<tr><td>Use, examine, take</td><td>E</td></tr>
+						<tr><td>Inventory</td><td>Tab or I</td></tr>
+						<tr><td>Journal and hints</td><td>J</td></tr>
+						<tr><td>Back, close, pause</td><td>Esc</td></tr>
+						<tr><td>Menus and puzzles</td><td>Mouse, or arrows and Enter</td></tr>
+					</tbody>
+				</table>
+				<h3>System requirements</h3>
+				<p>Windows 10 or newer, 64-bit, a graphics card that runs Direct3D 11. The game is light; it has not been measured on a range of machines, so no frame-rate promises are made.</p>
+			</div>
+		</section>
+
+		<section id="download">
+			<div class="wrap">
+				<h2>Download</h2>
+				<p><a class="btn" href="#download" aria-disabled="true">Coming soon</a></p>
+				<p class="fine">When the first release is published, this button will point to the Windows installer attached to the latest GitHub Release. Until then there is nothing to download, and no link is shown.</p>
+			</div>
+		</section>
+	</main>
+
+	<footer>
+		<div class="wrap">
+			<p>Temnorid: Escape · version 0.1.0 · part of <a href="https://temnorid.com">Temnorid</a> · built on the <a href="https://3d.itkamianets.com">IT Kamianets 3D Engine</a>. Future Lords integration is not part of this version: the escape here changes nothing in Lords.</p>
+		</div>
+	</footer>
+</body>
+</html>

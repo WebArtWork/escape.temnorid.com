@@ -1,0 +1,27 @@
+{
+  "allowUnsafeCode": false,
+  "noEngineReferences": false,
+  "versionDefines": [],
+  "defineConstraints": [],
+  "name": "Temnorid.Escape",
+  "rootNamespace": "Temnorid.Escape",
+  "references": [
+    "ITKamianets.Engine.Core",
+    "ITKamianets.Engine.Input",
+    "ITKamianets.Engine.Save",
+    "Unity.InputSystem",
+    "UnityEngine.UI",
+    "ITKamianets.Engine.Feedback",
+    "ITKamianets.Engine.Graybox",
+    "ITKamianets.Engine.UI",
+    "ITKamianets.Engine.Synth",
+    "ITKamianets.Engine.FixedCamera"
+  ],
+  "includePlatforms": [],
+  "excludePlatforms": [],
+  "overrideReferences": true,
+  "precompiledReferences": [
+    "Newtonsoft.Json.dll"
+  ],
+  "autoReferenced": true
+}
