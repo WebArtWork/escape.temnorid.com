@@ -68,7 +68,7 @@
 	<main>
 		<div class="hero">
 			<div class="wrap">
-				<p class="eyebrow">A Temnorid game · Windows · first MVP</p>
+				<p class="eyebrow">A Temnorid game · Windows · Android and iOS builds not published yet · version 0.2.0</p>
 				<h1>Temnorid: Escape</h1>
 				<p class="tagline">Escape from the watchtower prison.</p>
 				<p class="lead">A scout is caught near a village storehouse and locked in a cell. No weapons and no combat: read the clues, solve three puzzles, slip past one patrolling guard and leave by the service gate. About 10–15 minutes, played through classic fixed cameras. The text of the game is in Ukrainian.</p>
@@ -94,7 +94,8 @@
 					<li>One predictable guard with a visible loop, a pause at the window, and one hiding place. Being caught only sends you back a few steps; nothing is lost.</li>
 					<li>Inventory with a key-combining step, a journal with the clues you found, and hints that arrive after you have been stuck for a while.</li>
 					<li>Autosave, Continue, and a replay from scratch.</li>
-					<li>Alone it is fully offline: no account, nothing leaves your PC. Playing with a friend (two prisoners in one prison) uses the network only for that game.</li>
+					<li>Alone, nothing leaves your PC and no account is needed. You can play with a friend (two prisoners in one prison); the network is used only for that game.</li>
+					<li>A sign-in screen like the one in Lords (Google or guest), which you can skip. Touch controls for phones. A Windows game that updates itself.</li>
 				</ul>
 				<h3>The episode</h3>
 				<div class="cards">
@@ -124,14 +125,38 @@
 						<tr><td>Menus and puzzles</td><td>Mouse, or arrows and Enter</td></tr>
 					</tbody>
 				</table>
-				<h3>Playing with others</h3>
-				<p>Two prisoners can share one prison: from the main menu choose Play with others, one hosts and the other joins by address or online code. The host's game decides the puzzles, items, doors and the guard; each of you has your own camera. If the guard sees either of you, you both go back to the corridor; whoever walks out through the gate ends the escape for both. Online games are not saved, so they never touch your own saved game.</p>
-				<h3>Updates</h3>
-				<p>The Windows game updates itself from the newest GitHub release when it starts. You can turn this off in Profile.</p>
-				<h3>Phones</h3>
-				<p>Android and iOS builds are made with Unity Build Profiles. On a phone you walk with the thumb stick, use the Action button to take, use or hide, hold Run to go faster, and the bottom tabs open the inventory and the journal.</p>
+				<p class="fine">Keyboard and mouse, or touch on a phone (see Phones). Your game is saved on your PC.</p>
 				<h3>System requirements</h3>
 				<p>Windows 10 or newer, 64-bit, a graphics card that runs Direct3D 11. The game is light; it has not been measured on a range of machines, so no frame-rate promises are made.</p>
+			</div>
+		</section>
+
+		<section id="others">
+			<div class="wrap">
+				<h2>Playing with others</h2>
+				<p>Two prisoners can share one prison. Choose <strong>Play with others</strong> in the main menu: one player hosts, the other joins with the address it shows or an online code. The host's game decides the puzzles, items, doors and the guard; each of you has your own camera. If the guard sees either of you, you both go back to the corridor; whoever walks out through the gate ends the escape for both. Online games are not saved, so they never touch your own saved game.</p>
+			</div>
+		</section>
+
+		<section id="phones">
+			<div class="wrap">
+				<h2>Phones</h2>
+				<p>Android and iOS builds are made from Unity Build Profiles. On a phone you walk with the thumb stick, use the Action button to take, use or hide, hold Run to go faster, and the bottom tabs open the inventory and the journal. They have not been tried on a device yet, and no phone build is published.</p>
+			</div>
+		</section>
+
+		<section id="updates">
+			<div class="wrap">
+				<h2>Updates</h2>
+				<p>The Windows game updates itself from the newest GitHub release when it starts. You can turn this off in Profile.</p>
+			</div>
+		</section>
+
+		<section id="lords">
+			<div class="wrap">
+				<h2>Part of the world of Temnorid</h2>
+				<p>The first time you press Play, a sign-in screen like the one in Lords offers <strong>Sign in with Google</strong> (on Windows, when it is set up on the device), <strong>Play as a guest</strong> or <strong>Play offline</strong>. You can sign in later from Profile, and a signed-in player starts with their Google name. The episode plays the same with or without an account, and offline.</p>
+				<p>Escape does not read or write anything in Lords: the capture of the scout is a local stand-in, and the escape changes nothing in Lords.</p>
 			</div>
 		</section>
 
@@ -139,6 +164,11 @@
 			<div class="wrap">
 				<h2>Download</h2>
 				<p><a class="btn" href="https://github.com/WebArtWork/escape.temnorid.com/releases/latest/download/Temnorid-Escape-Setup.exe">Download Temnorid-Escape-Setup.exe</a></p>
+				<ol>
+					<li>Download the installer and run it.</li>
+					<li>Windows may warn about an unknown publisher, because the installer is not signed yet. Choose <strong>More info</strong>, then <strong>Run anyway</strong>.</li>
+					<li>Start Temnorid: Escape from the Start menu.</li>
+				</ol>
 				<p class="fine">Requires Windows 10 or later, 64-bit. All releases and release notes: <a href="https://github.com/WebArtWork/escape.temnorid.com/releases">GitHub Releases</a>.</p>
 			</div>
 		</section>
@@ -146,7 +176,7 @@
 
 	<footer>
 		<div class="wrap">
-			<p>Temnorid: Escape · version 0.2.0 · part of <a href="https://temnorid.com">Temnorid</a> · built on the <a href="https://3d.itkamianets.com">IT Kamianets 3D Engine</a>. Future Lords integration is not part of this version: the escape here changes nothing in Lords.</p>
+			<p>Temnorid: Escape · version 0.2.0 · part of <a href="https://temnorid.com">Temnorid</a> · built on the <a href="https://3d.itkamianets.com">IT Kamianets 3D Engine</a>. The escape here changes nothing in Lords.</p>
 		</div>
 	</footer>
 </body>
