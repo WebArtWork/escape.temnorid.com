@@ -58,6 +58,7 @@
     "com.unity.timeline": "6.6.0",
     "com.unity.ugui": "2.6.0",
     "com.unity.visualscripting": "1.9.12",
-    "com.itkamianets.3d-unity-combat": "https://github.com/IT-Kamianets/3d-unity-combat.git"
+    "com.itkamianets.3d-unity-combat": "https://github.com/IT-Kamianets/3d-unity-combat.git",
+    "com.itkamianets.3d-unity-account": "https://github.com/IT-Kamianets/3d-unity-account.git"
   }
 }
