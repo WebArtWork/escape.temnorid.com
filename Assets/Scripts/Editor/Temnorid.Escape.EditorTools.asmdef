@@ -7,6 +7,9 @@
   "rootNamespace": "Temnorid.Escape.EditorTools",
   "references": [
     "Temnorid.Escape",
+    "ITKamianets.Engine.Shell",
+    "ITKamianets.Engine.Shell.Editor",
+    "ITKamianets.Engine.Net",
     "ITKamianets.Engine.Feedback",
     "ITKamianets.Engine.Graybox",
     "ITKamianets.Engine.Graybox.Editor",

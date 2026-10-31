@@ -6,6 +6,8 @@
   "name": "Temnorid.Escape",
   "rootNamespace": "Temnorid.Escape",
   "references": [
+    "ITKamianets.Engine.Shell",
+    "ITKamianets.Engine.Net",
     "ITKamianets.Engine.Core",
     "ITKamianets.Engine.Input",
     "ITKamianets.Engine.Save",

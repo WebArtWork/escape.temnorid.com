@@ -9,6 +9,8 @@
   "rootNamespace": "Temnorid.Escape.Tests",
   "references": [
     "Temnorid.Escape",
+    "ITKamianets.Engine.Net",
+    "ITKamianets.Engine.Shell",
     "ITKamianets.Engine.Save",
     "ITKamianets.Engine.FixedCamera",
     "UnityEngine.TestRunner",

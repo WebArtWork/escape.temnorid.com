@@ -21,8 +21,15 @@ namespace Temnorid.Escape
 		/// <summary>The hidden player cannot be seen. Set by the game.</summary>
 		public bool TargetHidden;
 		public float PatrolTime { get; private set; }
-		public float Awareness => _meter.Awareness;
+		public float Awareness => Remote ? _remoteAwareness : _meter.Awareness;
 		public bool Sees { get; private set; }
+
+		/// <summary>The other prisoner of an online game, as the host sees them, and whether they are out of sight (hidden or in a screen).</summary>
+		public Transform Other;
+		public bool OtherHidden;
+		/// <summary>On a guest's machine the guard is only shown from what the host publishes; it never patrols or watches here.</summary>
+		public bool Remote;
+		float _remoteAwareness;
 		public PatrolSample Sample { get; private set; }
 
 		public event Action Detected;
@@ -74,18 +81,42 @@ namespace Temnorid.Escape
 
 		bool CanSee()
 		{
-			if (Target == null || TargetHidden) return false;
-			if (!GuardVision.InCone(Sample.Position, Sample.Facing, Target.Position2D)) return false;
+			if (Target != null && !TargetHidden && CanSeeAt(Target.transform.position, Target.Position2D)) return true;
+			if (Other != null && !OtherHidden && CanSeeAt(Other.position, new Vector2(Other.position.x, Other.position.z))) return true;
+			return false;
+		}
+
+		bool CanSeeAt(Vector3 position, Vector2 position2D)
+		{
+			if (!GuardVision.InCone(Sample.Position, Sample.Facing, position2D)) return false;
 			var eye = transform.position + Vector3.up * 1.5f;
-			var chest = Target.transform.position + Vector3.up * 1.0f;
+			var chest = position + Vector3.up * 1.0f;
 			if (!Physics.Linecast(eye, chest, out var hit, ~0, QueryTriggerInteraction.Ignore)) return true;
 			return hit.collider.GetComponentInParent<Player>() != null;
+		}
+
+		/// <summary>A guest's copy: what the host says the guard is doing (awareness, paused, watching). Position comes from a RemoteBody.</summary>
+		public void ShowRemote(float awareness, bool paused, bool sees, float distanceToTarget)
+		{
+			_remoteAwareness = awareness;
+			Sees = sees;
+			if (Figure != null) Figure.Speed = paused ? 0f : EscapeConfig.GuardSpeed;
+			UpdateMark();
+			if (!paused)
+			{
+				_nextStep -= Time.deltaTime;
+				if (_nextStep <= 0f)
+				{
+					_nextStep = 0.55f;
+					Footstep?.Invoke(Mathf.Clamp01(1f - distanceToTarget / 16f));
+				}
+			}
 		}
 
 		void UpdateMark()
 		{
 			if (Mark == null) return;
-			var a = _meter.Awareness;
+			var a = Awareness;
 			var show = a > 0.04f;
 			if (Mark.gameObject.activeSelf != show) Mark.gameObject.SetActive(show);
 			if (!show) return;

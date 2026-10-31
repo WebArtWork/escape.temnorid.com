@@ -233,6 +233,15 @@ namespace Temnorid.Escape
 
 		public void ResetLatch() => _latchProgress = 0;
 
+		/// <summary>A guest's mirror of the host's puzzle screens (the dots on the latch and the three symbols); no rule is involved.</summary>
+		public void SetPuzzleView(int latchProgress, int slot0, int slot1, int slot2)
+		{
+			_latchProgress = Mathf.Clamp(latchProgress, 0, LatchAnswer.Length);
+			_slots[0] = (Symbol)Mathf.Clamp(slot0, 0, (int)Symbol.Tree);
+			_slots[1] = (Symbol)Mathf.Clamp(slot1, 0, (int)Symbol.Tree);
+			_slots[2] = (Symbol)Mathf.Clamp(slot2, 0, (int)Symbol.Tree);
+		}
+
 		// ---- the corridor and the storeroom ----
 
 		public bool ReachCorridor()

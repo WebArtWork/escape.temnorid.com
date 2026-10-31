@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using ITKamianets.Engine.FixedCamera;
 using ITKamianets.Engine.Graybox;
 using ITKamianets.Engine.Graybox.EditorTools;
+using ITKamianets.Engine.Shell.Editor;
 using UnityEditor;
 using UnityEditor.Build;
 using UnityEditor.SceneManagement;
@@ -29,9 +30,7 @@ namespace Temnorid.Escape.EditorTools
 		[MenuItem("Temnorid/Escape/Build Scene")]
 		public static void Build()
 		{
-			PlayerSettings.productName = "Temnorid Escape";
-			PlayerSettings.companyName = "Temnorid";
-			PlayerSettings.bundleVersion = "0.1.0";
+			ShellSceneKit.ApplyPlatformSettings("Temnorid", "Temnorid Escape", "com.itkamianets.escape", "0.2.0");
 			PlayerSettings.SetApplicationIdentifier(NamedBuildTarget.Standalone, "com.itkamianets.temnoridescape");
 			PlayerSettings.runInBackground = true;
 			PlayerSettings.fullScreenMode = FullScreenMode.FullScreenWindow;
@@ -88,7 +87,10 @@ namespace Temnorid.Escape.EditorTools
 			hud.Game = game;
 
 			EditorSceneManager.SaveScene(scene, ScenePath);
-			EditorBuildSettings.scenes = new[] { new EditorBuildSettingsScene(ScenePath, true) };
+			// The shell scenes open new scenes: the game scene is saved first and nothing from it is needed after.
+			ShellSceneKit.BuildBoot();
+			ShellSceneKit.BuildMenu();
+			ShellSceneKit.SetBuildOrder(ScenePath);
 			AssetDatabase.SaveAssets();
 			Debug.Log("[Escape] Scene built: " + ScenePath);
 		}

@@ -1,5 +1,7 @@
 using System;
 using System.Text;
+using ITKamianets.Engine.Net;
+using ITKamianets.Engine.Shell;
 using ITKamianets.Engine.UI;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,6 +27,12 @@ namespace Temnorid.Escape
 		Text[] _slotTexts;
 		Mode _shown = (Mode)(-1);
 
+		ShellChrome _chrome;
+		GameObject _touch, _checkpointButton, _replayButton;
+		TouchStick _stick;
+		TouchButton _act, _run, _pauseTouch;
+		float _statusAt;
+
 		void Start()
 		{
 			_ui = new UiBuilder
@@ -35,7 +43,19 @@ namespace Temnorid.Escape
 				ButtonPressed = new Color(0.8f, 0.65f, 0.3f),
 			};
 			UiBuilder.EnsureEventSystem(transform);
-			var root = UiBuilder.CreateCanvas(transform).transform;
+			var canvas = UiBuilder.CreateCanvas(transform);
+			_chrome = ShellChrome.Create(transform);
+			_chrome.PlaceSelected += OnPlace;
+
+			// Every screen lives in the frame the shell's bars leave free.
+			var frame = new GameObject("Frame", typeof(RectTransform));
+			frame.transform.SetParent(canvas.transform, false);
+			var frameRect = (RectTransform)frame.transform;
+			frameRect.anchorMin = new Vector2(0f, _chrome.BottomFraction);
+			frameRect.anchorMax = new Vector2(1f, 1f - _chrome.TopFraction);
+			frameRect.offsetMin = Vector2.zero;
+			frameRect.offsetMax = Vector2.zero;
+			var root = frame.transform;
 			BuildHud(root);
 			BuildLatch(root);
 			BuildCabinet(root);
@@ -48,7 +68,7 @@ namespace Temnorid.Escape
 			BuildVictory(root);
 			BuildIntro(root);
 			BuildTitle(root);
-			var fade = UiBuilder.Box("Fade", root, Vector2.zero, Vector2.one, Color.black);
+			var fade = UiBuilder.Box("Fade", canvas.transform, Vector2.zero, Vector2.one, Color.black);
 			_fade = fade.GetComponent<Image>();
 			_fade.raycastTarget = false;
 		}
@@ -78,24 +98,14 @@ namespace Temnorid.Escape
 		{
 			_title = Screen("Title", root, new Color(0.04f, 0.035f, 0.04f, 0.94f));
 			var t = _title.transform;
-			Lbl(t, Loc.T("title"), 96, TextAnchor.MiddleCenter, 0.1f, 0.68f, 0.9f, 0.88f, Gold);
-			Lbl(t, Loc.T("subtitle"), 44, TextAnchor.MiddleCenter, 0.1f, 0.6f, 0.9f, 0.7f, Cream);
+			Lbl(t, Loc.T("subtitle"), 64, TextAnchor.MiddleCenter, 0.1f, 0.68f, 0.9f, 0.86f, Gold);
 			Btn(t, Loc.T("menu.new"), 0.35f, 0.46f, 0.65f, 0.55f, () => Game.NewGame());
 			var cont = Btn(t, Loc.T("menu.continue"), 0.35f, 0.35f, 0.65f, 0.44f, () => Game.ContinueGame());
 			_titleContinue = cont.gameObject;
 			Btn(t, Loc.T("menu.settings"), 0.35f, 0.24f, 0.65f, 0.33f, () => Game.OpenSettings());
-			Btn(t, Loc.T("menu.quit"), 0.35f, 0.13f, 0.65f, 0.22f, Quit);
+			Btn(t, Loc.T("menu"), 0.35f, 0.13f, 0.65f, 0.22f, () => ShellFlow.QuitToMenu());
 			_titleNote = Lbl(t, "", 30, TextAnchor.MiddleCenter, 0.1f, 0.05f, 0.9f, 0.12f, new Color(1f, 0.6f, 0.5f));
 			Lbl(t, Loc.T("menu.demo"), 26, TextAnchor.LowerCenter, 0.1f, 0.0f, 0.9f, 0.05f, new Color(0.7f, 0.68f, 0.62f));
-		}
-
-		static void Quit()
-		{
-#if UNITY_EDITOR
-			UnityEditor.EditorApplication.isPlaying = false;
-#else
-			Application.Quit();
-#endif
 		}
 
 		void BuildIntro(Transform root)
@@ -113,7 +123,8 @@ namespace Temnorid.Escape
 			var t = _hud.transform;
 			var obj = UiBuilder.Box("ObjectiveBox", t, new Vector2(0.015f, 0.9f), new Vector2(0.42f, 0.985f), new Color(0f, 0f, 0f, 0.6f));
 			_objective = Lbl(obj.transform, "", 32, TextAnchor.MiddleLeft, 0.03f, 0f, 0.98f, 1f, Cream, true);
-			Lbl(t, "Tab — " + Loc.T("inventory") + "    J — " + Loc.T("journal") + "    Esc — " + Loc.T("pause"), 24, TextAnchor.UpperRight, 0.5f, 0.94f, 0.985f, 0.99f, new Color(0.85f, 0.82f, 0.74f, 0.8f));
+			if (!EscapeGame.TouchUi)
+				Lbl(t, "Tab — " + Loc.T("inventory") + "    J — " + Loc.T("journal") + "    Esc — " + Loc.T("pause"), 24, TextAnchor.UpperRight, 0.5f, 0.94f, 0.985f, 0.99f, new Color(0.85f, 0.82f, 0.74f, 0.8f));
 
 			_promptBox = UiBuilder.Box("PromptBox", t, new Vector2(0.3f, 0.07f), new Vector2(0.7f, 0.14f), new Color(0f, 0f, 0f, 0.7f));
 			_prompt = Lbl(_promptBox.transform, "", 36, TextAnchor.MiddleCenter, 0f, 0f, 1f, 1f, Gold);
@@ -126,6 +137,52 @@ namespace Temnorid.Escape
 
 			_awarenessBack = UiBuilder.Box("AwarenessBack", t, new Vector2(0.4f, 0.03f), new Vector2(0.6f, 0.05f), new Color(0f, 0f, 0f, 0.6f));
 			_awareness = UiBuilder.Box("AwarenessFill", _awarenessBack.transform, Vector2.zero, Vector2.one, Red).GetComponent<Image>();
+			if (EscapeGame.TouchUi) BuildTouch(t);
+		}
+
+		// On a phone: a thumb stick on the left; an action button (use, take, hide), a run button and a pause button on the right.
+		void BuildTouch(Transform parent)
+		{
+			_touch = new GameObject("Touch", typeof(RectTransform));
+			_touch.transform.SetParent(parent, false);
+			var rect = (RectTransform)_touch.transform;
+			rect.anchorMin = Vector2.zero;
+			rect.anchorMax = Vector2.one;
+			rect.offsetMin = Vector2.zero;
+			rect.offsetMax = Vector2.zero;
+			_stick = TouchStick.Create(_touch.transform, new Vector2(0.02f, 0.1f), new Vector2(0.22f, 0.55f));
+			_act = TouchButton.Create(_ui, _touch.transform, Loc.T("touch.act"), new Vector2(0.78f, 0.1f), new Vector2(0.98f, 0.38f), 40);
+			_run = TouchButton.Create(_ui, _touch.transform, Loc.T("touch.run"), new Vector2(0.82f, 0.42f), new Vector2(0.96f, 0.6f), 32);
+			_pauseTouch = TouchButton.Create(_ui, _touch.transform, "II", new Vector2(0.92f, 0.86f), new Vector2(0.99f, 0.99f), 36);
+		}
+
+		void UpdateTouch()
+		{
+			var player = Game.Player;
+			var playing = Game.Mode == Mode.Playing && _chrome != null && !_chrome.ProfileOpen;
+			_touch.SetActive(playing);
+			player.TouchMove = playing && _stick != null ? _stick.Value : Vector2.zero;
+			player.TouchRun = playing && _run != null && _run.Held;
+			if (!playing) return;
+			if (_act != null && _act.ConsumePress()) Game.Interact();
+			if (_pauseTouch != null && _pauseTouch.ConsumePress()) Game.Pause();
+		}
+
+		void OnPlace(string id)
+		{
+			if (Game == null) return;
+			switch (id)
+			{
+				case EscapeShell.PlacePrison:
+					if (Game.Mode == Mode.Inventory || Game.Mode == Mode.Journal) Game.ClosePanel();
+					break;
+				case EscapeShell.PlaceInventory:
+					Game.OpenPanel(Mode.Inventory);
+					break;
+				case EscapeShell.PlaceJournal:
+					Game.OpenPanel(Mode.Journal);
+					break;
+			}
 		}
 
 		void BuildLatch(Transform root)
@@ -166,7 +223,7 @@ namespace Temnorid.Escape
 			_reading = Screen("Reading", root, new Color(0f, 0f, 0f, 0.5f));
 			var panel = UiBuilder.Box("Panel", _reading.transform, new Vector2(0.2f, 0.25f), new Vector2(0.8f, 0.75f), Panel);
 			_readingText = Lbl(panel.transform, "", 38, TextAnchor.MiddleCenter, 0.06f, 0.28f, 0.94f, 0.95f, Cream, true);
-			Btn(panel.transform, Loc.T("close") + " (E)", 0.35f, 0.06f, 0.65f, 0.22f, () => Game.CloseReading(), 32);
+			Btn(panel.transform, Loc.T("close") + (EscapeGame.TouchUi ? "" : " (E)"), 0.35f, 0.06f, 0.65f, 0.22f, () => Game.CloseReading(), 32);
 		}
 
 		void BuildInventory(Transform root)
@@ -200,9 +257,9 @@ namespace Temnorid.Escape
 			_pauseTitle = Lbl(t, Loc.T("pause"), 52, TextAnchor.MiddleCenter, 0.05f, 0.86f, 0.95f, 0.98f, Gold);
 			Btn(t, Loc.T("resume"), 0.1f, 0.71f, 0.9f, 0.84f, () => Game.Resume());
 			Btn(t, Loc.T("journal"), 0.1f, 0.56f, 0.9f, 0.69f, () => Game.OpenPanel(Mode.Journal));
-			Btn(t, Loc.T("checkpoint"), 0.1f, 0.41f, 0.9f, 0.54f, () => Game.RestartFromCheckpoint(), 30);
+			_checkpointButton = Btn(t, Loc.T("checkpoint"), 0.1f, 0.41f, 0.9f, 0.54f, () => Game.RestartFromCheckpoint(), 30).gameObject;
 			Btn(t, Loc.T("menu.settings"), 0.1f, 0.26f, 0.9f, 0.39f, () => Game.OpenSettings());
-			Btn(t, Loc.T("menu"), 0.1f, 0.08f, 0.9f, 0.21f, () => Game.ToTitle());
+			Btn(t, Loc.T("menu"), 0.1f, 0.08f, 0.9f, 0.21f, () => ShellFlow.QuitToMenu());
 		}
 
 		void BuildSettings(Transform root)
@@ -218,7 +275,7 @@ namespace Temnorid.Escape
 			Btn(t, "+", 0.6f, 0.57f, 0.66f, 0.67f, () => Game.SetVolumes(Game.Settings.masterVolume, Game.Settings.sfxVolume + 0.1f));
 			var fs = Btn(t, "", 0.3f, 0.44f, 0.7f, 0.54f, () => Game.SetFullscreen(!Game.Settings.fullscreen), 34);
 			_fullscreenText = fs.GetComponentInChildren<Text>();
-			Lbl(t, Loc.T("controls"), 30, TextAnchor.MiddleCenter, 0.12f, 0.22f, 0.88f, 0.4f, new Color(0.85f, 0.82f, 0.74f), true);
+			Lbl(t, Loc.T(EscapeGame.TouchUi ? "controls.touch" : "controls"), 30, TextAnchor.MiddleCenter, 0.12f, 0.22f, 0.88f, 0.4f, new Color(0.85f, 0.82f, 0.74f), true);
 			Btn(t, Loc.T("back"), 0.38f, 0.06f, 0.62f, 0.16f, () => Game.CloseSettings());
 		}
 
@@ -239,8 +296,8 @@ namespace Temnorid.Escape
 			_victoryReason = Lbl(t, "", 30, TextAnchor.MiddleCenter, 0.1f, 0.47f, 0.9f, 0.53f, new Color(0.75f, 0.72f, 0.66f));
 			Lbl(t, Loc.T("lords.mission"), 32, TextAnchor.MiddleCenter, 0.15f, 0.36f, 0.85f, 0.46f, new Color(0.8f, 0.9f, 1f), true);
 			Lbl(t, Loc.T("lords.demo"), 26, TextAnchor.MiddleCenter, 0.15f, 0.26f, 0.85f, 0.36f, new Color(0.65f, 0.7f, 0.76f), true);
-			Btn(t, Loc.T("replay"), 0.25f, 0.1f, 0.48f, 0.21f, () => Game.Replay());
-			Btn(t, Loc.T("menu"), 0.52f, 0.1f, 0.75f, 0.21f, () => Game.ToTitle());
+			_replayButton = Btn(t, Loc.T("replay"), 0.25f, 0.1f, 0.48f, 0.21f, () => Game.Replay()).gameObject;
+			Btn(t, Loc.T("menu"), 0.52f, 0.1f, 0.75f, 0.21f, () => ShellFlow.QuitToMenu());
 		}
 
 		// ---- showing ----
@@ -256,10 +313,37 @@ namespace Temnorid.Escape
 				_shown = mode;
 			}
 			Refresh(mode);
+			SyncChrome(mode);
+			if (_touch != null) UpdateTouch();
+		}
+
+		/// <summary>The tab bar follows the screen the game is on, and the bar shows who plays along.</summary>
+		void SyncChrome(Mode mode)
+		{
+			if (_chrome == null) return;
+			if (!_chrome.ProfileOpen)
+			{
+				var want = mode == Mode.Inventory ? EscapeShell.PlaceInventory : mode == Mode.Journal ? EscapeShell.PlaceJournal : EscapeShell.PlacePrison;
+				if (_chrome.CurrentPlace != want) _chrome.Select(want, false);
+			}
+			if (Time.unscaledTime < _statusAt) return;
+			_statusAt = Time.unscaledTime + 0.5f;
+			var net = Game.Net;
+			if (net == null) _chrome.SetStatus("");
+			else _chrome.SetStatus(net.Others.Count > 0 ? Loc.T("net.with", FirstOtherName(net)) : Loc.T("net.alone"));
+		}
+
+		static string FirstOtherName(EscapeNet net)
+		{
+			foreach (var player in net.Session.Players)
+				if (player.Id != net.Session.LocalId) return player.Name;
+			return "";
 		}
 
 		void Show(Mode mode)
 		{
+			if (_checkpointButton != null) _checkpointButton.SetActive(Game.Net == null);
+			if (_replayButton != null) _replayButton.SetActive(Game.Net == null);
 			_title.SetActive(mode == Mode.Title);
 			_intro.SetActive(mode == Mode.Intro);
 			_hud.SetActive(mode == Mode.Playing || mode == Mode.Caught || mode == Mode.Latch || mode == Mode.Cabinet);

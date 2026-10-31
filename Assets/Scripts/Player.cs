@@ -19,6 +19,10 @@ namespace Temnorid.Escape
 		public Vector2? ScriptedInput;
 		public bool ScriptedRun;
 
+		/// <summary>The thumb stick of a phone (x right, y forward), used when the keys and the pad say nothing.</summary>
+		public Vector2 TouchMove;
+		public bool TouchRun;
+
 		CharacterController _body;
 		Figure _figure;
 		float _vy;
@@ -89,6 +93,11 @@ namespace Temnorid.Escape
 					var actions = EngineInput.Default.Player;
 					input = actions.Move.ReadValue<Vector2>();
 					run = actions.Sprint.IsPressed();
+					if (input.sqrMagnitude < 0.01f && TouchMove.sqrMagnitude > 0.01f)
+					{
+						input = TouchMove;
+						run = TouchRun;
+					}
 				}
 			}
 
