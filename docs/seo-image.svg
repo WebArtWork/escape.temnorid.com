@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+ <rect width="1200" height="630" fill="#101218"/><path d="M0 6H1200" stroke="#e3b64f" stroke-width="12"/>
+ <g font-family="Segoe UI, Arial, sans-serif" fill="#eceae4">
+ <text x="72" y="105" font-size="26" font-weight="700" letter-spacing="5">TEMNORID</text>
+ <text x="72" y="151" font-size="24" fill="#eed292">A prison escape</text>
+ <text x="72" y="285" font-size="96" font-weight="700" letter-spacing="-3">Escape</text>
+ <text x="74" y="438" font-size="29" fill="#eed292">Find the clues · Unlock the gate</text>
+ <path d="M72 514H1128" stroke="#2c303c" stroke-width="2"/>
+ <text x="72" y="566" font-size="24" fill="#a9acb8">escape.temnorid.com</text>
+ <text x="1128" y="566" font-size="24" text-anchor="end" fill="#a9acb8">A Temnorid game</text>
+ </g><g transform="translate(800 148) scale(2.35)"><path d="M25 111V29C25 21 31 15 39 15H91C99 15 105 21 105 29V111H91V30H39V111Z" fill="#e3b64f"/><path d="M43 33 78 45V115L43 103Z" fill="#eed292"/><circle cx="64" cy="69" r="7" fill="#1b1e27"/><path d="M61 73H67L69 86H59Z" fill="#1b1e27"/><path d="M87 50H91V101H87Z" fill="#8d7131"/></g></svg>
