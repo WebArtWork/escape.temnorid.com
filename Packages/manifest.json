@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "com.itkamianets.3d-unity-assetra": "https://github.com/IT-Kamianets/3d-unity-assetra.git",
     "com.itkamianets.3d-unity-core": "https://github.com/IT-Kamianets/3d-unity-core.git",
     "com.itkamianets.3d-unity-feedback": "https://github.com/IT-Kamianets/3d-unity-feedback.git",
     "com.itkamianets.3d-unity-fixed-camera": "https://github.com/IT-Kamianets/3d-unity-fixed-camera.git",
